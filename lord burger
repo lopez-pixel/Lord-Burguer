@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lord Burger Ceilândia | Cardápio & Pedidos Online</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            title: ['"Bebas Neue"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              yellow: '#F59E0B',
+              red: '#DC2626',
+              dark: '#111827',
+              card: '#1F2937',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- TOP BAR INFO -->
+  <div class="bg-amber-500 text-black text-xs sm:text-sm font-semibold py-2 px-4 text-center flex items-center justify-center gap-3">
+    <span><i class="fa-solid fa-clock mr-1"></i> Aberto hoje até 23:59</span>
+    <span class="hidden sm:inline">•</span>
+    <span class="hidden sm:inline"><i class="fa-solid fa-location-dot mr-1"></i> QNM 1 - Ceilândia, Brasília - DF</span>
+    <span>•</span>
+    <span><i class="fa-solid fa-motorcycle mr-1"></i> Delivery & Retirada</span>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 bg-gray-900/90 backdrop-blur-md border-b border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="text-3xl text-amber-500 font-title tracking-wider">LORD BURGER</span>
+        <span class="text-[10px] bg-red-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">Ceilândia</span>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <a href="#cardapio" class="hidden md:inline-block text-sm font-semibold text-gray-300 hover:text-amber-400 transition">Cardápio</a>
+        <a href="#localizacao" class="hidden md:inline-block text-sm font-semibold text-gray-300 hover:text-amber-400 transition">Onde Estamos</a>
+        
+        <!-- Cart Button -->
+        <button onclick="toggleCart()" class="relative flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold px-4 py-2 rounded-xl transition shadow-lg shadow-amber-500/20 active:scale-95">
+          <i class="fa-solid fa-bag-shopping text-lg"></i>
+          <span class="hidden sm:inline text-sm">Meu Pedido</span>
+          <span id="cart-count" class="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative py-12 md:py-20 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950 border-b border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-400 text-xs font-bold mb-4">
+          <i class="fa-solid fa-fire"></i> O autêntico sabor artesanal de Ceilândia
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-title tracking-wide text-white leading-tight uppercase">
+          HAMBÚRGUERES DE <span class="text-amber-500">VERDADE</span>, FEITOS NA BRASA.
+        </h1>
+        <p class="mt-4 text-gray-400 text-base sm:text-lg">
+          Carnes nobres selecionadas, queijo derretido de primeira e molhos artesanais exclusivos. Faça seu pedido online e receba quentinho onde estiver!
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#cardapio" class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-3.5 rounded-xl transition shadow-lg shadow-amber-500/25 flex items-center gap-2">
+            <i class="fa-solid fa-utensils"></i> Explorar Cardápio
+          </a>
+          <a href="https://wa.me/5561991116257" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold px-6 py-3.5 rounded-xl border border-gray-700 transition flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i> Falar no WhatsApp
+          </a>
+        </div>
+
+        <!-- Mini Stats -->
+        <div class="mt-8 pt-6 border-t border-gray-800/80 flex items-center gap-6 text-sm text-gray-400">
+          <div>
+            <span class="text-amber-400 font-bold block text-lg">R$ 20 – 40</span>
+            <span>Média de preço</span>
+          </div>
+          <div class="border-l border-gray-800 pl-6">
+            <span class="text-amber-400 font-bold block text-lg">30 - 50 min</span>
+            <span>Tempo de Entrega</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="absolute -inset-4 bg-amber-500/10 rounded-full blur-3xl -z-10"></div>
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80" 
+             alt="Hambúrguer Artesanal Lord Burger" 
+             class="w-full h-80 sm:h-96 object-cover rounded-3xl shadow-2xl border border-gray-800 transform md:rotate-1 hover:rotate-0 transition duration-300">
+      </div>
+    </div>
+  </section>
+
+  <!-- CARDÁPIO SECTION -->
+  <main id="cardapio" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div class="text-center max-w-xl mx-auto mb-8">
+      <h2 class="text-3xl sm:text-4xl font-title tracking-wider text-white uppercase">Cardápio Digital</h2>
+      <p class="text-gray-400 text-sm mt-1">Selecione os itens desejados para montar seu pedido online.</p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8" id="category-tabs">
+      <button onclick="filterCategory('todos')" class="tab-btn active px-4 py-2 rounded-xl text-sm font-semibold transition bg-amber-500 text-black">
+        Todos
+      </button>
+      <button onclick="filterCategory('burgers')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-gray-900 text-gray-300 hover:bg-gray-800">
+        Burgers
+      </button>
+      <button onclick="filterCategory('acompanhamentos')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-gray-900 text-gray-300 hover:bg-gray-800">
+        Acompanhamentos
+      </button>
+      <button onclick="filterCategory('bebidas')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-gray-900 text-gray-300 hover:bg-gray-800">
+        Bebidas & Shakes
+      </button>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Items will be injected dynamically via JS -->
+    </div>
+  </main>
+
+  <!-- ABOUT & LOCATION -->
+  <section id="localizacao" class="bg-gray-900 border-t border-gray-800 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h3 class="text-3xl font-title tracking-wide text-white mb-4 uppercase">Informações do Lord Burger</h3>
+        <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+          Localizado no coração de Ceilândia, oferecemos espaço acolhedor para consumo no local e serviço ágil de entrega em domicílio para você saborear o verdadeiro hambúrguer artesanal.
+        </p>
+
+        <ul class="space-y-3 text-sm text-gray-300">
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-location-dot text-amber-500 mt-1"></i>
+            <div>
+              <strong>Endereço:</strong><br>
+              St. M QNM 1 - Ceilândia, Brasília - DF, 72215-011
+            </div>
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-solid fa-clock text-amber-500"></i>
+            <div><strong>Horário de Funcionamento:</strong> Aberto todos os dias até 23:59</div>
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-brands fa-whatsapp text-green-500"></i>
+            <div><strong>Contato direto:</strong> (61) 99111-6257</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-950 p-6 rounded-2xl border border-gray-800 shadow-xl">
+        <h4 class="font-bold text-white mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-motorcycle text-amber-500"></i>
+          Garantia de Entrega Rápida
+        </h4>
+        <p class="text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed">
+          Nossos pedidos saem em embalagens térmicas lacradas para garantir que seu sanduíche e batata frita cheguem quentes e crocantes na sua casa!
+        </p>
+        <a href="#cardapio" class="block w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold text-center rounded-xl transition">
+          Fazer Pedido Agora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART SIDEBAR / DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity flex justify-end">
+    <div class="bg-gray-900 w-full max-w-md h-full flex flex-col border-l border-gray-800 shadow-2xl p-6 overflow-y-auto">
+      
+      <!-- Drawer Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-800">
+        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-amber-500"></i> Seu Pedido
+        </h3>
+        <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Items List -->
+      <div id="cart-items" class="py-4 space-y-4 flex-1">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Checkout Form -->
+      <div id="checkout-form-container" class="border-t border-gray-800 pt-4 space-y-3">
+        <h4 class="text-sm font-bold text-gray-200 uppercase tracking-wide">Dados para Entrega</h4>
+        
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Seu Nome *</label>
+          <input type="text" id="cust-name" placeholder="Ex: João Silva" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Tipo de Pedido</label>
+          <select id="cust-type" onchange="toggleAddressField()" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+            <option value="Entrega">Entrega em Domicílio (+ R$ 5,00)</option>
+            <option value="Retirada">Retirar no Balcão (Sem taxa)</option>
+          </select>
+        </div>
+
+        <div id="address-box">
+          <label class="block text-xs text-gray-400 mb-1">Endereço Completo em Ceilândia *</label>
+          <input type="text" id="cust-address" placeholder="QNM / QNN, Conjunto, Casa/Apto, Referência" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Forma de Pagamento</label>
+          <select id="cust-payment" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+            <option value="PIX">PIX (Chave enviada no WhatsApp)</option>
+            <option value="Cartão Débito">Cartão de Débito</option>
+            <option value="Cartão Crédito">Cartão de Crédito</option>
+            <option value="Dinheiro">Dinheiro</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Observações (opcional)</label>
+          <input type="text" id="cust-obs" placeholder="Ex: sem cebola, ponto da carne, troco p/ 50" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+        </div>
+
+        <!-- Totals -->
+        <div class="bg-gray-950 p-3 rounded-lg border border-gray-800 space-y-1 text-sm mt-3">
+          <div class="flex justify-between text-gray-400">
+            <span>Subtotal:</span>
+            <span id="cart-subtotal">R$ 0,00</span>
+          </div>
+          <div class="flex justify-between text-gray-400">
+            <span>Taxa de Entrega:</span>
+            <span id="cart-delivery">R$ 5,00</span>
+          </div>
+          <div class="flex justify-between text-white font-bold text-base border-t border-gray-800 pt-1 mt-1">
+            <span>Total:</span>
+            <span id="cart-total" class="text-amber-400">R$ 0,00</span>
+          </div>
+        </div>
+
+        <!-- Checkout Action Button -->
+        <button onclick="sendOrderToWhatsApp()" class="w-full mt-3 bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-green-600/30">
+          <i class="fa-brands fa-whatsapp text-xl"></i>
+          <span>Finalizar Pedido no WhatsApp</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-8 border-t border-gray-900 text-center text-xs text-gray-500">
+    <p>© 2026 LORD BURGER CEILÂNDIA - St. M QNM 1, Brasília - DF.</p>
+    <p class="mt-1">Telefone / Pedidos: (61) 99111-6257</p>
+  </footer>
+
+  <!-- JAVASCRIPT: DATA & INTERACTIVITY -->
+  <script>
+    // Cardápio de Produtos
+    const products = [
+      {
+        id: 1,
+        category: 'burgers',
+        name: 'Lord Bacon Supremo',
+        price: 32.90,
+        description: 'Pão brioche tostado, blend artesanal 160g grelhado, fatias generosas de bacon crocante, queijo cheddar derretido e maionese defumada.',
+        image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 2,
+        category: 'burgers',
+        name: 'Lord Smash Duplo',
+        price: 26.90,
+        description: '2x blends prensados de 90g com crostinha perfeita, queijo prato duplo derretido, picles artesanal e molho especial da casa.',
+        image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 3,
+        category: 'burgers',
+        name: 'Lord Cheddar Melt',
+        price: 29.90,
+        description: 'Pão escuro especial, hambúrguer artesanal 160g, cebola caramelizada na chapa e uma cascata de creme de cheddar cremoso.',
+        image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 4,
+        category: 'burgers',
+        name: 'Lord Chicken Crispy',
+        price: 27.50,
+        description: 'Sobrecoxa empanada super crocante com tempero secreto, queijo muçarela, alface americana fresca e maionese verde artesanal.',
+        image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 5,
+        category: 'acompanhamentos',
+        name: 'Batata Rústica Cheddar & Bacon',
+        price: 19.90,
+        description: 'Porção de batatas com corte rústico, sequinhas e cobertas com cheddar cremoso e farofa crocante de bacon.',
+        image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 6,
+        category: 'acompanhamentos',
+        name: 'Onion Rings Empanadas',
+        price: 16.00,
+        description: 'Anéis de cebola selecionados e empanados com farinha especial, fritos na hora. Acompanha molho barbecue.',
+        image: 'https://images.unsplash.com/photo-1639024471285-0afc3831b799?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 7,
+        category: 'bebidas',
+        name: 'Milk-shake de Nutella & Ninho (400ml)',
+        price: 17.00,
+        description: 'Sorvete de baunilha batido artesanalmente com pasta de avelã Nutella autêntica e leite Ninho polvilhado.',
+        image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 8,
+        category: 'bebidas',
+        name: 'Refrigerante Lata 350ml',
+        price: 6.00,
+        description: 'Coca-Cola (Original ou Zero), Guaraná Antarctica ou Fanta Laranja bem gelados.',
+        image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=700&q=80'
+      }
+    ];
+
+    // Carrinho em memória
+    let cart = [];
+
+    // Renderizar Itens do Cardápio
+    function renderProducts(category = 'todos') {
+      const container = document.getElementById('products-grid');
+      container.innerHTML = '';
+
+      const filtered = category === 'todos' 
+        ? products 
+        : products.filter(p => p.category === category);
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-700 transition flex flex-col group";
+        card.innerHTML = `
+          <div class="h-48 overflow-hidden relative">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 right-3 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-lg text-amber-400 font-bold text-sm">
+              R$ ${p.price.toFixed(2).replace('.', ',')}
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-lg text-white group-hover:text-amber-400 transition">${p.name}</h3>
+              <p class="text-xs sm:text-sm text-gray-400 mt-2 line-clamp-2">${p.description}</p>
+            </div>
+            <button onclick="addToCart(${p.id})" class="mt-4 w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 active:scale-95">
+              <i class="fa-solid fa-plus text-sm"></i> Adicionar ao Pedido
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Filtrar Categoria
+    function filterCategory(cat) {
+      document.querySelectorAll('#category-tabs button').forEach(btn => {
+        btn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-gray-900 text-gray-300 hover:bg-gray-800";
+      });
+      event.target.className = "tab-btn active px-4 py-2 rounded-xl text-sm font-semibold transition bg-amber-500 text-black";
+      renderProducts(cat);
+    }
+
+    // Gerenciamento de Carrinho
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      updateCartUI();
+      // Mostra drawer ao adicionar
+      const drawer = document.getElementById('cart-drawer');
+      if (drawer.classList.contains('hidden')) {
+        toggleCart();
+      }
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const countEl = document.getElementById('cart-count');
+      const itemsContainer = document.getElementById('cart-items');
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const totalEl = document.getElementById('cart-total');
+      const deliveryEl = document.getElementById('cart-delivery');
+      const orderType = document.getElementById('cust-type').value;
+
+      const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+      countEl.innerText = totalItems;
+
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="text-center py-10 text-gray-500">
+            <i class="fa-solid fa-burger text-4xl mb-3 text-gray-600 block"></i>
+            Seu carrinho está vazio.<br>Adicione itens saborosos do cardápio!
+          </div>
+        `;
+        subtotalEl.innerText = 'R$ 0,00';
+        totalEl.innerText = 'R$ 0,00';
+        return;
+      }
+
+      itemsContainer.innerHTML = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+
+        const row = document.createElement('div');
+        row.className = "flex items-center justify-between bg-gray-950 p-3 rounded-xl border border-gray-800 text-sm";
+        row.innerHTML = `
+          <div class="flex-1 pr-2">
+            <h5 class="font-bold text-white">${item.name}</h5>
+            <span class="text-xs text-amber-500">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+          </div>
+          <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 px-2 py-1 rounded-lg">
+            <button onclick="changeQty(${item.id}, -1)" class="text-gray-400 hover:text-white px-1 font-bold">-</button>
+            <span class="text-white font-semibold text-xs px-1">${item.qty}</span>
+            <button onclick="changeQty(${item.id}, 1)" class="text-gray-400 hover:text-white px-1 font-bold">+</button>
+          </div>
+        `;
+        itemsContainer.appendChild(row);
+      });
+
+      const deliveryFee = orderType === 'Entrega' ? 5.00 : 0.00;
+      deliveryEl.innerText = deliveryFee > 0 ? `R$ ${deliveryFee.toFixed(2).replace('.', ',')}` : 'Grátis';
+
+      subtotalEl.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+      totalEl.innerText = `R$ ${(subtotal + deliveryFee).toFixed(2).replace('.', ',')}`;
+    }
+
+    function toggleCart() {
+      const drawer = document.getElementById('cart-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function toggleAddressField() {
+      const type = document.getElementById('cust-type').value;
+      const addrBox = document.getElementById('address-box');
+      if (type === 'Retirada') {
+        addrBox.style.display = 'none';
+      } else {
+        addrBox.style.display = 'block';
+      }
+      updateCartUI();
+    }
+
+    // Envio do Pedido formatado para o WhatsApp da Hamburgueria
+    function sendOrderToWhatsApp() {
+      if (cart.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+      }
+
+      const name = document.getElementById('cust-name').value.trim();
+      const type = document.getElementById('cust-type').value;
+      const address = document.getElementById('cust-address').value.trim();
+      const payment = document.getElementById('cust-payment').value;
+      const obs = document.getElementById('cust-obs').value.trim();
+
+      if (!name) {
+        alert('Por favor, informe seu nome.');
+        return;
+      }
+
+      if (type === 'Entrega' && !address) {
+        alert('Por favor, informe o endereço de entrega em Ceilândia.');
+        return;
+      }
+
+      let subtotal = 0;
+      let orderItemsText = '';
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+        orderItemsText += `• ${item.qty}x ${item.name} (R$ ${itemTotal.toFixed(2).replace('.', ',')})\n`;
+      });
+
+      const deliveryFee = type === 'Entrega' ? 5.00 : 0.00;
+      const total = subtotal + deliveryFee;
+
+      // Montando a mensagem para o WhatsApp do Lord Burger
+      let message = `🍔 *NOVO PEDIDO - LORD BURGER CEILÂNDIA*\n`;
+      message += `--------------------------------------\n`;
+      message += `👤 *Cliente:* ${name}\n`;
+      message += `🛵 *Tipo:* ${type}\n`;
+      if (type === 'Entrega') {
+        message += `📍 *Endereço:* ${address}\n`;
+      }
+      message += `💳 *Pagamento:* ${payment}\n`;
+      if (obs) {
+        message += `📝 *Observação:* ${obs}\n`;
+      }
+      message += `--------------------------------------\n`;
+      message += `*ITENS DO PEDIDO:*\n${orderItemsText}`;
+      message += `--------------------------------------\n`;
+      message += `Subtotal: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+      message += `Entrega: R$ ${deliveryFee.toFixed(2).replace('.', ',')}\n`;
+      message += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
+      message += `_Aguardando confirmação do pedido!_`;
+
+      const whatsappNumber = '5561991116257';
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    // Inicialização
+    renderProducts();
+  </script>
+</body>
+</html>
